@@ -9,6 +9,18 @@ import {
   getUserSessionHandler,
 } from './controller/session.controller';
 import requireUser from './middleware/requireUser';
+import {
+  createProductSchema,
+  deleteProductSchema,
+  getProductSchema,
+  updateProductSchema,
+} from './schema/product.schema';
+import {
+  createProductHandler,
+  deleteProductHandler,
+  getProductHandler,
+  updateProductHandler,
+} from './controller/product.controller';
 
 export default function routes(app: Express) {
   app.get('/healthcheck', (req: Request, res: Response) => {
@@ -25,4 +37,26 @@ export default function routes(app: Express) {
 
   app.get('/api/sessions', requireUser, getUserSessionHandler);
   app.delete('/api/sessions', requireUser, deleteSessionHandler);
+
+  //product routes
+  app.post(
+    '/api/products',
+    [requireUser, validate(createProductSchema)],
+    createProductHandler,
+  );
+  app.get(
+    '/api/products/:productId',
+    validate(getProductSchema),
+    getProductHandler,
+  );
+  app.put(
+    '/api/products/:productId',
+    [requireUser, validate(updateProductSchema)],
+    updateProductHandler,
+  );
+  app.delete(
+    '/api/products/:productId',
+    [requireUser, validate(deleteProductSchema)],
+    deleteProductHandler,
+  );
 }
