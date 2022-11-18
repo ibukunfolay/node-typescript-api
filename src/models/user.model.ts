@@ -2,10 +2,13 @@ import bcrypt from 'bcrypt';
 import config from 'config';
 import { Schema, model, Document } from 'mongoose';
 
-export interface UserDocument extends Document {
+export interface UserInput {
   email: string;
   name: string;
   password: string;
+}
+
+export interface UserDocument extends UserInput, Document {
   createdAt: Date;
   updatedAt: Date;
   comparePassword: (candidatePassword: string) => Promise<boolean>;

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import log from '../../utils/logger';
+import log from '../utils/logger';
 import { createUser } from '../services/user.service';
 import { createUserInput } from '../schema/user.schema';
 

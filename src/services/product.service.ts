@@ -4,13 +4,12 @@ import {
   QueryOptions,
   UpdateQuery,
 } from 'mongoose';
-import productModel, { ProductDocument } from '../models/product.model';
+import productModel, {
+  ProductDocument,
+  ProductInput,
+} from '../models/product.model';
 
-export async function createProduct(
-  input: DocumentDefinition<
-    Omit<ProductDocument, 'createdAt' | 'updatedAt' | 'comparePassword'>
-  >,
-) {
+export async function createProduct(input: ProductInput) {
   const product = await productModel.create(input);
 
   return product.toJSON<ProductDocument>();

@@ -2,8 +2,8 @@ import express from 'express';
 import config from 'config';
 
 import routes from './routes';
-import logger from '../utils/logger';
-import connect from '../utils/connect';
+import logger from './utils/logger';
+import connect from './utils/connect';
 import deserializeUser from './middleware/deserializeUser';
 
 const app = express();

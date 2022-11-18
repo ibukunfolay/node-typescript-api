@@ -5,7 +5,7 @@ import {
   findAndUpdateProduct,
   findProduct,
 } from '../services/product.service';
-import log from '../../utils/logger';
+import log from '../utils/logger';
 import {
   createProductInput,
   deleteProductInput,
@@ -102,7 +102,7 @@ export const deleteProductHandler = async (
 
     const productCreator = product.user;
 
-    if (productCreator.toString()  !== userId) {
+    if (productCreator.toString() !== userId) {
       return res.sendStatus(403).send(productCreator);
     }
 
