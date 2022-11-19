@@ -12,14 +12,14 @@ import productModel, {
 export async function createProduct(input: ProductInput) {
   const product = await productModel.create(input);
 
-  return product.toJSON<ProductDocument>();
+  return product.toJSON();
 }
 
 export async function findProduct(
   query: FilterQuery<ProductDocument>,
   options: QueryOptions = { lean: true },
 ) {
-  return productModel.find(query, {}, options);
+  return productModel.findOne(query, {}, options);
 }
 
 export async function findAndUpdateProduct(
@@ -27,7 +27,7 @@ export async function findAndUpdateProduct(
   update: UpdateQuery<ProductDocument>,
   options: QueryOptions,
 ) {
-  return productModel.findOneAndUpdate({ query, update, options });
+  return productModel.findOneAndUpdate(query, update, options);
 }
 
 export async function deleteProduct(query: FilterQuery<ProductDocument>) {

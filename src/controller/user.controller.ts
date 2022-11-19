@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import log from '../utils/logger';
+import logger from '../utils/logger';
 import { createUser } from '../services/user.service';
 import { createUserInput } from '../schema/user.schema';
 
@@ -11,7 +11,7 @@ export const createUserHandler = async (
     const user = await createUser(req.body);
     return res.send(user);
   } catch (error: any) {
-    log.error(error);
+    logger.error(error);
     return res.status(409).send(error.message);
   }
 };

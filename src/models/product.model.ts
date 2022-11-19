@@ -13,6 +13,7 @@ export interface ProductInput {
 }
 
 export interface ProductDocument extends ProductInput, Document {
+  productId: String;
   createdAt: Date;
   updatedAt: Date;
 }

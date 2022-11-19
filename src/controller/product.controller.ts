@@ -5,7 +5,7 @@ import {
   findAndUpdateProduct,
   findProduct,
 } from '../services/product.service';
-import log from '../utils/logger';
+import logger from '../utils/logger';
 import {
   createProductInput,
   deleteProductInput,
@@ -18,15 +18,19 @@ export const createProductHandler = async (
   res: Response,
 ) => {
   try {
-    const userId = res.locals.user._id;
+    const userId = await res.locals.user._id;
 
     const body = req.body;
 
     const product = await createProduct({ ...body, user: userId });
+
+    if (!product) {
+      logger.error('error');
+    }
+
     return res.send(product);
   } catch (error: any) {
-    log.error(error);
-    return res.status(409).send(error.message);
+    res.sendStatus(409).send(error);
   }
 };
 
@@ -35,7 +39,7 @@ export const getProductHandler = async (
   res: Response,
 ) => {
   try {
-    const productId = req.params.productId;
+    const productId = req.params;
 
     const product = await findProduct({ productId });
 
@@ -45,13 +49,13 @@ export const getProductHandler = async (
 
     return res.send(product);
   } catch (error: any) {
-    log.error(error);
-    return res.status(409).send(error.message);
+    logger.error(error);
+    return res.sendStatus(409).send(error.message);
   }
 };
 
 export const updateProductHandler = async (
-  req: Request<{}, {}, updateProductInput['params']>,
+  req: Request<updateProductInput['params']>,
   res: Response,
 ) => {
   try {
@@ -63,16 +67,14 @@ export const updateProductHandler = async (
 
     const product = await findProduct({ productId });
 
-    console.log(product);
-
     if (!product) {
       return res.sendStatus(404);
     }
 
-    const productCreator = product.user;
+    const { user } = product;
 
-    if (productCreator.toString() !== userId) {
-      return res.sendStatus(403).send({ productCreator });
+    if (String(user) !== userId) {
+      return res.sendStatus(403).send(user);
     }
 
     const updateProduct = await findAndUpdateProduct({ productId }, update, {
@@ -80,13 +82,13 @@ export const updateProductHandler = async (
     });
     return res.send(updateProduct);
   } catch (error: any) {
-    log.error(error);
-    return res.status(409).send(error.message);
+    logger.error(error);
+    return res.sendStatus(409).send(error.message);
   }
 };
 
 export const deleteProductHandler = async (
-  req: Request<{}, {}, deleteProductInput['params']>,
+  req: Request<deleteProductInput['params']>,
   res: Response,
 ) => {
   try {
@@ -100,10 +102,10 @@ export const deleteProductHandler = async (
       return res.sendStatus(404);
     }
 
-    const productCreator = product.user;
+    const { user } = product;
 
-    if (productCreator.toString() !== userId) {
-      return res.sendStatus(403).send(productCreator);
+    if (String(user) !== userId) {
+      return res.sendStatus(403).send(user);
     }
 
     const deletedProduct = await deleteProduct({ productId });
@@ -114,7 +116,7 @@ export const deleteProductHandler = async (
 
     return res.send(200);
   } catch (error: any) {
-    log.error(error);
-    return res.status(409).send(error.message);
+    logger.error(error);
+    return res.sendStatus(409).send(error.message);
   }
 };
