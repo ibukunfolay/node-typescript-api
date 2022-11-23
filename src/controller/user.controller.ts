@@ -15,3 +15,10 @@ export const createUserHandler = async (
     return res.status(409).send(error.message);
   }
 };
+
+export const getCurrentUser = async (
+  req: Request<{}, {}, createUserInput['body']>,
+  res: Response,
+) => {
+  return res.locals.user;
+};

@@ -1,5 +1,8 @@
 import { Express, Request, Response } from 'express';
-import { createUserHandler } from './controller/user.controller';
+import {
+  createUserHandler,
+  getCurrentUser,
+} from './controller/user.controller';
 import validate from './middleware/validateResource';
 import { createUserSchema } from './schema/user.schema';
 import { createSessionSchema } from './schema/session.schema';
@@ -27,6 +30,8 @@ export default function routes(app: Express) {
     res.sendStatus(200);
   });
 
+  //user routes
+  app.get('/api/me', requireUser, getCurrentUser);
   app.post('/api/users', validate(createUserSchema), createUserHandler);
 
   app.post(
