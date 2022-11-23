@@ -1,6 +1,7 @@
 export default {
   port: 1337,
   saltWorkFactor: 10,
+  origin: 'http://localhost:3000',
   dbURI: 'mongodb://localhost:27017/typescript-api',
   accessTokenTtl: '15m',
   refreshTokenTtl: '1y',
