@@ -3,11 +3,14 @@ import { FilterQuery } from 'mongoose';
 import userModel, { UserDocument, UserInput } from '../models/user.model';
 
 export async function createUser(input: UserInput) {
-  try {
+  const { email } = input;
+  const existingUser = await userModel.findOne({ email });
+
+  if (!existingUser) {
     const user = await userModel.create(input);
     return omit(user.toJSON(), 'password');
-  } catch (e: any) {
-    throw new Error(e);
+  } else {
+    throw new Error('email already in use');
   }
 }
 
