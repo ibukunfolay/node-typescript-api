@@ -20,5 +20,5 @@ export const getCurrentUser = async (
   req: Request<{}, {}, createUserInput['body']>,
   res: Response,
 ) => {
-  return res.locals.user;
+  return res.send(res.locals.user)
 };
