@@ -25,4 +25,7 @@ V3+2balTHG6+NK0tJBBwdIqTL2INdZ6P9ln58lEESdBSks0X9gzniPM7GKMnIyTq
 cpx4L8spwyJF2zJXAkEAmH9TVXRRzUCndKG9x/xMfirAPyZ4Uy8g5S7O1ZSrdMQd
 lkRIH60CBKWYgVuD2/ih7fvG/tTGV0qVIvbeVo7gzg==
 -----END RSA PRIVATE KEY-----`,
+  googleClientId: `${process.env.GOOGLE_CLIENT_ID}`,
+  googleClientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`,
+  googleRedirectUrl: `${process.env.GOOGLE_REDIRECT_URL}`,
 };

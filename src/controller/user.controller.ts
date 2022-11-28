@@ -11,7 +11,7 @@ export const createUserHandler = async (
     const user = await createUser(req.body);
     return res.send(user);
   } catch (error: any) {
-    logger.error(error);
+    logger.error(error.message);
     return res.status(409).send(error.message);
   }
 };
@@ -20,5 +20,5 @@ export const getCurrentUser = async (
   req: Request<{}, {}, createUserInput['body']>,
   res: Response,
 ) => {
-  return res.send(res.locals.user)
+  return res.send(res.locals.user);
 };
