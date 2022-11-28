@@ -5,6 +5,7 @@ import { Schema, model, Document } from 'mongoose';
 export interface UserInput {
   email: string;
   name: string;
+  picture: string;
   password: string;
 }
 
@@ -18,6 +19,7 @@ const userSchema = new Schema(
   {
     email: { type: String, required: true, unique: true },
     name: { type: String, required: true },
+    picture: { type: String },
     password: { type: String, required: true },
   },
   { timestamps: true },

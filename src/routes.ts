@@ -9,6 +9,7 @@ import { createSessionSchema } from './schema/session.schema';
 import {
   createSessionHandler,
   deleteSessionHandler,
+  getGoogleOauthHandler,
   getUserSessionHandler,
 } from './controller/session.controller';
 import requireUser from './middleware/requireUser';
@@ -41,6 +42,7 @@ export default function routes(app: Express) {
   );
 
   app.get('/api/sessions', requireUser, getUserSessionHandler);
+  app.get('/api/sessions/oauth/google', getGoogleOauthHandler);
   app.delete('/api/sessions', requireUser, deleteSessionHandler);
 
   //product routes
